@@ -79,7 +79,7 @@ public final class FriendServiceImpl implements FriendService {
                 return FriendActionResult.NOT_FRIENDS;
             }
             repository.delete(requester, target);
-            return FriendActionResult.ALREADY_FRIENDS;
+            return FriendActionResult.FRIEND_REMOVED;
         }, executor);
     }
 

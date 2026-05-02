@@ -1,4 +1,4 @@
-package com.wiceh.icecore.paper;
+package com.wiceh.icecore.velocity;
 
-public class IceCorePaperPlugin {
+public class IceCoreVelocityPlugin {
 }

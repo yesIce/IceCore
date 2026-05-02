@@ -1,20 +1,37 @@
 plugins {
-    id("java")
+    `java-library`
+    id("com.gradleup.shadow") version "9.4.1" apply false
 }
 
-group = "com.wiceh"
-version = "1.0-SNAPSHOT"
+allprojects {
+    group = "com.wiceh.icecore"
+    version = "1.0.0-SNAPSHOT"
 
-repositories {
-    mavenCentral()
+    repositories {
+        mavenCentral()
+        maven("https://repo.papermc.io/repository/maven-public/")
+    }
 }
 
-dependencies {
-    testImplementation(platform("org.junit:junit-bom:6.0.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
+subprojects {
+    apply(plugin = "java-library")
 
-tasks.test {
-    useJUnitPlatform()
+    extensions.configure<JavaPluginExtension> {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        }
+    }
+
+    tasks.withType<JavaCompile> {
+        options.encoding = "UTF-8"
+        options.release.set(21)
+    }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
+
+    tasks.withType<Jar>().configureEach {
+        archiveBaseName.set("IceCore-${project.name}")
+    }
 }

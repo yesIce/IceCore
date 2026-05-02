@@ -1,0 +1,21 @@
+database:
+  host: localhost
+  port: 5432
+  database: icecore
+  username: postgres
+  password: icecore
+  pool-size: 10
+
+redis:
+  host: localhost
+  port: 6380
+  password: ""
+  database: 0
+  pool-size: 8
+  timeout-millis: 2000
+
+lang:
+  default: en
+  bundled:
+    - en
+    - it

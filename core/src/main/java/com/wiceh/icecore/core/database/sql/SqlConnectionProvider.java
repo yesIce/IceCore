@@ -1,4 +1,4 @@
-package com.wiceh.icecore.core.database;
+package com.wiceh.icecore.core.database.sql;
 
 import com.wiceh.icecore.common.exception.DatabaseException;
 import com.wiceh.icecore.core.config.DatabaseConfig;
@@ -11,15 +11,16 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public final class ConnectionProvider implements AutoCloseable {
+public final class SqlConnectionProvider implements AutoCloseable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionProvider.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SqlConnectionProvider.class);
 
     private final HikariDataSource dataSource;
 
-    public ConnectionProvider(DatabaseConfig config) {
+    public SqlConnectionProvider(DatabaseConfig config) {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(config.jdbcUrl());
+        hikariConfig.setDriverClassName("org.postgresql.Driver");
         hikariConfig.setUsername(config.username());
         hikariConfig.setPassword(config.password());
         hikariConfig.setMaximumPoolSize(config.poolSize());

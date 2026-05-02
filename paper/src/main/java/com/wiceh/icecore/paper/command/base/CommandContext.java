@@ -1,4 +1,4 @@
-package com.wiceh.icecore.paper.command;
+package com.wiceh.icecore.paper.command.base;
 
 import com.wiceh.icecore.common.model.PlayerProfile;
 import com.wiceh.icecore.core.api.service.PlayerService;

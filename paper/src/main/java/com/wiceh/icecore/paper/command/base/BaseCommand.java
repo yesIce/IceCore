@@ -1,7 +1,8 @@
-package com.wiceh.icecore.paper.command;
+package com.wiceh.icecore.paper.command.base;
 
 import com.wiceh.icecore.core.api.service.PlayerService;
 import com.wiceh.icecore.paper.lang.Lang;
+import com.wiceh.icecore.paper.permission.IcePermission;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,17 +12,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public abstract class BaseCommand implements CommandExecutor, TabCompleter {
 
     protected final JavaPlugin plugin;
     protected final PlayerService playerService;
 
-    private final String permission;
+    private final IcePermission permission;
     private final boolean playerOnly;
 
     protected BaseCommand(JavaPlugin plugin, PlayerService playerService,
-                          String permission, boolean playerOnly) {
+                          IcePermission permission, boolean playerOnly) {
         this.plugin = plugin;
         this.playerService = playerService;
         this.permission = permission;
@@ -36,7 +38,7 @@ public abstract class BaseCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        if (permission != null && !sender.hasPermission(permission)) {
+        if (permission != null && !permission.has(sender)) {
             sender.sendMessage(Lang.get(sender, "error.no-permission"));
             return true;
         }
@@ -59,40 +61,37 @@ public abstract class BaseCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command,
                                       @NotNull String alias, @NotNull String[] args) {
-        if (permission != null && !sender.hasPermission(permission)) {
+        if (permission != null && !permission.has(sender)) {
             return Collections.emptyList();
         }
         return tabComplete(sender, args);
     }
 
-    /**
-     * Override to provide tab completion. Default: no suggestions.
-     */
     protected List<String> tabComplete(CommandSender sender, String[] args) {
         return Collections.emptyList();
     }
 
-    /**
-     * Implement the command logic here.
-     */
     protected abstract void execute(CommandContext ctx);
 
-    // === helpers per i comandi figli ===
-
-    /**
-     * Run something on the main thread (for sendMessage, world manipulation, etc.).
-     */
     protected void runSync(Runnable runnable) {
         plugin.getServer().getScheduler().runTask(plugin, runnable);
     }
 
-    /**
-     * Run an async future and switch back to the main thread for the result.
-     */
     protected <T> void handleAsync(java.util.concurrent.CompletableFuture<T> future,
                                    java.util.function.Consumer<T> onSuccess,
                                    CommandSender sender) {
         future.thenAccept(result -> runSync(() -> onSuccess.accept(result)))
+                .exceptionally(throwable -> {
+                    runSync(() -> sender.sendMessage(Lang.get(sender, "error.unknown-error")));
+                    plugin.getLogger().warning("Async command failed: " + throwable.getMessage());
+                    return null;
+                });
+    }
+
+    protected void handleAsyncVoid(CompletableFuture<Void> future,
+                                   Runnable onSuccess,
+                                   CommandSender sender) {
+        future.thenAccept(v -> runSync(onSuccess))
                 .exceptionally(throwable -> {
                     runSync(() -> sender.sendMessage(Lang.get(sender, "error.unknown-error")));
                     plugin.getLogger().warning("Async command failed: " + throwable.getMessage());

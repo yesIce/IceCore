@@ -1,0 +1,40 @@
+name: ${name}
+version: ${version}
+main: com.wiceh.icecore.paper.IceCorePaperPlugin
+api-version: '1.21'
+description: Network core plugin with SQL and Redis backends
+author: wIceh
+load: STARTUP
+
+commands:
+  profile:
+    description: View a player's profile
+    usage: /profile [player]
+    permission: icecore.command.profile
+  playtime:
+    description: View a player's playtime
+    usage: /playtime [player]
+    permission: icecore.command.playtime
+  lang:
+    description: Change your language
+    usage: /lang [locale]
+    permission: icecore.command.lang
+  friend:
+    description: Manage your friends
+    usage: /friend <add|remove|accept|deny|list|requests> [player]
+    permission: icecore.command.friend
+
+permissions:
+  icecore.command.profile:
+    default: true
+  icecore.command.profile.others:
+    default: op
+  icecore.command.playtime:
+    default: true
+  icecore.command.playtime.others:
+    default: op
+  icecore.command.lang:
+    default: true
+  icecore.command.friend:
+    description: Use the /friend command
+    default: true

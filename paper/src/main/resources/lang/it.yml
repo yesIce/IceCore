@@ -1,0 +1,73 @@
+error:
+  no-permission: "&cNon hai il permesso di usare questo comando."
+  player-only: "&cQuesto comando può essere usato solo dai giocatori."
+  console-needs-target: "&cLa console deve specificare un target: &f{usage}"
+  unknown-error: "&cSi è verificato un errore durante l'esecuzione del comando."
+  player-not-found: "&cNessun profilo trovato per &f{player}"
+
+command:
+  playtime:
+    result: "&7Tempo di gioco di &f{player}&7: &f{time}"
+
+  profile:
+    header: "&8&m─────────────&r &b&lProfilo &8&m─────────────"
+    footer: "&8&m──────────────────────────────"
+    username: "&7Username: &f{username}"
+    uuid: "&7UUID: &f{uuid}"
+    first-seen: "&7Primo accesso: &f{date} &8({ago} fa)"
+    last-seen: "&7Ultimo accesso: &f{date}"
+    playtime: "&7Tempo di gioco: &f{time}"
+
+  lang:
+    changed: "&aLingua cambiata in &f{locale}&a!"
+    already-set: "&7La lingua è già impostata su &f{locale}&7."
+    invalid: "&cLingua sconosciuta: &f{locale}&c. Disponibili: &f{available}"
+    list: "&7Lingue disponibili: &f{available}"
+
+  friend:
+    usage: "&cUtilizzo: /friend <add|remove|accept|deny|list|requests> [player]"
+    add:
+      sent: "&7Richiesta di amicizia inviata a &f{player}&7."
+      auto-accepted: "&aSei ora amico di &f{player}&a!"
+      already-friends: "&cSei già amico di &f{player}&c."
+      cannot-add-self: "&cNon puoi essere amico di te stesso."
+    accept:
+      success: "&aYou are now friends with &f{player}&a!"
+      not-found: "&cNo pending friend request from &f{player}&c."
+    deny:
+      success: "&7Friend request from &f{player}&7 denied."
+      not-found: "&cNo pending friend request from &f{player}&c."
+    remove:
+      success: "&7You are no longer friends with &f{player}&7."
+      not-friends: "&cYou are not friends with &f{player}&c."
+    list:
+      header: "&8&m──────────&r &b&lFriends &8&m──────────"
+      entry-online: "  &a● &f{player} &8({since})"
+      entry-offline: "  &7○ &f{player} &8({since})"
+      empty: "&7You have no friends yet."
+      footer: "&8&m───────────────────────"
+    requests:
+      header: "&8&m────────&r &b&lPending Requests &8&m────────"
+      entry: "  &e▶ &f{player} &8(type /friend accept {player})"
+      empty: "&7No pending friend requests."
+      footer: "&8&m───────────────────────"
+
+time:
+  day:
+    one: "{n} giorno"
+    many: "{n} giorni"
+  hour:
+    one: "{n} ora"
+    many: "{n} ore"
+  minute:
+    one: "{n} minuto"
+    many: "{n} minuti"
+  second:
+    one: "{n} secondo"
+    many: "{n} secondi"
+  short:
+    day: "{n}g"
+    hour: "{n}h"
+    minute: "{n}m"
+    second: "{n}s"
+  separator: " "

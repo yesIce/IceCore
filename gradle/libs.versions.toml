@@ -1,0 +1,32 @@
+[versions]
+java = "21"
+paper = "1.21.10-R0.1-SNAPSHOT"
+velocity = "3.5.0-SNAPSHOT"
+hikari = "7.0.2"
+postgresql = "42.7.11"
+jedis = "7.4.1"
+slf4j = "2.0.17"
+junit = "6.0.3"
+testcontainers = "2.0.5"
+
+[libraries]
+paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper" }
+velocity-api = { module = "com.velocitypowered:velocity-api", version.ref = "velocity" }
+
+hikari = { module = "com.zaxxer:HikariCP", version.ref = "hikari" }
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+
+jedis = { module = "redis.clients:jedis", version.ref = "jedis" }
+
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
+testcontainers-bom = { module = "org.testcontainers:testcontainers-bom", version.ref = "testcontainers" }
+testcontainers-junit = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }
+testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
+
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
+
+[bundles]
+database = ["hikari", "postgresql"]
+testing = ["junit-jupiter", "testcontainers-junit", "testcontainers-postgresql"]
